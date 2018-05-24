@@ -1,22 +1,29 @@
 <?php
 
 namespace app\models;
+use app\models\Laptops;
 
 class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
 {
+    const STATUS_DELETED = 0;
+    const STATUS_ACTIVE = 10;
+    const ROLE_ADMIN = 100;
+    const ROLE_EDITOR = 200;
+    const ROLE_AUTHOR = 300;
+    
     public $id;
     public $username;
     public $password;
     public $authKey;
     public $accessToken;
 
-    private static $users = [
+   private static $users = [
         '100' => [
             'id' => '100',
             'username' => 'admin',
             'password' => 'admin',
             'authKey' => 'test100key',
-            'accessToken' => '100-token',
+            'accessToken' => '100',
         ],
         '101' => [
             'id' => '101',
@@ -27,8 +34,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
         ],
     ];
 
-
-    /**
+  /**
      * {@inheritdoc}
      */
     public static function findIdentity($id)
@@ -49,8 +55,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
 
         return null;
     }
-
-    /**
+ /**
      * Finds user by username
      *
      * @param string $username
@@ -66,8 +71,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
 
         return null;
     }
-
-    /**
+  /**
      * {@inheritdoc}
      */
     public function getId()
@@ -90,8 +94,7 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     {
         return $this->authKey === $authKey;
     }
-
-    /**
+  /**
      * Validates password
      *
      * @param string $password password to validate
@@ -101,4 +104,18 @@ class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
     {
         return $this->password === $password;
     }
+    public function getArtist()
+    {
+        return $this->hasMany(Artist::className(), ['user_id'=>'id']);
+    }
+    public function getLaptops()
+    {
+        return $this->hasMany(Laptops::className(), ['user_id'=>'id']);
+    }
+    public function getProducers()
+    {
+        return $this->hasMany(Producers::className(), ['user_id'=>'id']);
+    }
 }
+
+    
