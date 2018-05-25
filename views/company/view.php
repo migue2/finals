@@ -3,8 +3,8 @@ use yii\widgets\DetailView;
 use yii\helpers\html;
 
 
-$this->params['breadcrumbs'][] = ['label'=> 'Company','url'=>['/company/index']];
-$this->params['breadcrumbs'][] = $model->phone_no;
+$this->params['breadcrums'][] = ['label'=> 'Company','url'=>['/company/index']];
+$this->params['breadcrums'][] = $model->phone_no;
 
 ?>
 <h1>View Your Company</h1>
